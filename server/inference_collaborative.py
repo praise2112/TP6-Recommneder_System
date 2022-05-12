@@ -5,7 +5,7 @@ import json
 from fuzzywuzzy import process
 from scipy.sparse import csr_matrix
 import statistics
-from base import Base, clean
+from .base import Base, clean
 
 
 class CollaborativeFilter(Base):

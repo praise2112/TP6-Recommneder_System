@@ -2,7 +2,7 @@ import pandas as pd
 import json
 import statistics
 from fuzzywuzzy import process
-from base import Base
+from .base import Base
 
 
 def str2bool(v):
