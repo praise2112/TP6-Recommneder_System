@@ -9,10 +9,6 @@ import json
 from flask import render_template
 import os
 
-
-collaborative_filter_recommender = CollaborativeFilter()
-content_based_filter_recommender = ContentBasedFilter()
-
 dir_path = os.path.dirname(os.path.realpath(__file__))
 app = Flask(__name__, static_url_path='', static_folder=os.path.join(dir_path, '..', 'client/build'), template_folder=os.path.join(dir_path, '..', 'client/build'))
 app.config['JSON_SORT_KEYS'] = False
@@ -29,6 +25,7 @@ def react_app():
 @app.route('/collaborative/<path:text>', methods=['GET'])
 def predict_collaborative(text):
   try:
+    collaborative_filter_recommender = CollaborativeFilter()
     recommender_type = request.args.get("model", default='', type=str)  # get model type from query
     no_of_recommendation = request.args.get("num", default=10, type=int)  # get num of recommendations from query
     is_user = request.args.get("user", default='false', type=str)  # get num of recommendations from query
@@ -54,6 +51,7 @@ def predict_collaborative(text):
 @app.route('/contentbased/<path:text>', methods=['GET'])
 def predict_content_based(text):
   try:
+    content_based_filter_recommender = ContentBasedFilter()
     no_of_recommendation = request.args.get("num", default=10, type=int)  # get num of recommendations from query
     result = content_based_filter_recommender.recommend_content_based(text, n_recommendations=no_of_recommendation)
     return jsonify({"success": True,  "prediction": result})
@@ -66,6 +64,7 @@ def predict_content_based(text):
 @app.route('/movies/contentbased', methods=['GET'])
 def get_content_based_movies():
   try:
+    collaborative_filter_recommender = CollaborativeFilter()
     return jsonify({"success": True,  "movies": list(collaborative_filter_recommender.valid_movies_cb)})
   except Exception as e:
     traceback.print_exc()
@@ -76,6 +75,7 @@ def get_content_based_movies():
 @app.route('/movies/collaborative', methods=['GET'])
 def get_collaborative_movies():
   try:
+    collaborative_filter_recommender = CollaborativeFilter()
     recommender_type = request.args.get("model", default='', type=str)  # get model type from query
     valid_movies = collaborative_filter_recommender.valid_movies_knn if recommender_type == "KNN" else collaborative_filter_recommender.valid_movies_itm
     return jsonify({"success": True,  "movies": list(valid_movies)})
@@ -88,6 +88,7 @@ def get_collaborative_movies():
 @app.route('/users/collaborative', methods=['GET'])
 def get_collaborative_users():
   try:
+    collaborative_filter_recommender = CollaborativeFilter()
     recommender_type = request.args.get("model", default='', type=str)  # get model type from query
     valid_users = collaborative_filter_recommender.valid_users_knn if recommender_type == "KNN" else collaborative_filter_recommender.valid_users_itm
     return jsonify({"success": True, "users": [int(i) for i in list(valid_users)]})
@@ -100,6 +101,7 @@ def get_collaborative_users():
 @app.route('/movies/<path:text>', methods=['GET'])
 def get_movie(text):
   try:
+    collaborative_filter_recommender = CollaborativeFilter()
     text = process.extractOne(text, collaborative_filter_recommender.movies_df['title'])[0]
     movie = collaborative_filter_recommender.movies_df_full[collaborative_filter_recommender.movies_df_full['title'] == text].iloc[0].to_dict()
     movie['genres'] = [genre['name'] for genre in json.loads(movie['genres'].replace("'", '"'))]
