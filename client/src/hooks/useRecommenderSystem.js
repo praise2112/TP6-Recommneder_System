@@ -15,7 +15,8 @@ const COLS = [
 
 
 
-const API_URL = "http://127.0.0.1:80"
+const API_URL = "https://recommender-tp6.herokuapp.com"
+// const API_URL = "http://127.0.0.1:80"
 
 export const useRecommenderSystem = () => {
     const [collabMovies, setCollabMovies] = useState([]);
