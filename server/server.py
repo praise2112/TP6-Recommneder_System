@@ -17,6 +17,12 @@ app = Flask(__name__, static_url_path='', static_folder=get_static_folder(), tem
 app.config['JSON_SORT_KEYS'] = False
 CORS(app)
 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+print(dir_path)
+print(os.getcwd())
+print(os.path.exists(os.path.join(dir_path, '..', 'client', 'build', 'index.html')))
+print( os.listdir('/app'))
+print( os.listdir('/app/client'))
 
 @app.route('/')
 def react_app():
@@ -24,6 +30,8 @@ def react_app():
   print(dir_path)
   print(os.getcwd())
   print(os.path.exists(os.path.join(dir_path, '..', 'client', 'build', 'index.html')))
+  print( os.listdir('/app'))
+  print( os.listdir('/app/client'))
   return render_template('index.html')
 
 
