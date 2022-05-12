@@ -9,8 +9,11 @@ import json
 from flask import render_template
 import os
 
-dir_path = os.path.dirname(os.path.realpath(__file__))
-app = Flask(__name__, static_url_path='', static_folder=os.path.join(dir_path, '..', 'client/build'), template_folder=os.path.join(dir_path, '..', 'client/build'))
+def get_static_folder():
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    return os.path.join(dir_path, '..', 'client/build')
+
+app = Flask(__name__, static_url_path='', static_folder=get_static_folder(), template_folder=get_static_folder())
 app.config['JSON_SORT_KEYS'] = False
 CORS(app)
 
@@ -18,6 +21,8 @@ CORS(app)
 @app.route('/')
 def react_app():
   dir_path = os.path.dirname(os.path.realpath(__file__))
+  print(dir_path)
+  print(os.getcwd())
   print(os.path.exists(os.path.join(dir_path, '..', 'client', 'build', 'index.html')))
   return render_template('index.html')
 
