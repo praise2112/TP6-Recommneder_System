@@ -1,0 +1,10 @@
+flask
+flask_cors
+werkzeug
+gunicorn
+numpy
+pandas
+fuzzywuzzy
+sklearn
+scipy
+python-Levenshtein
