@@ -1,13 +1,18 @@
 import argparse
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from .inference_collaborative import CollaborativeFilter
-from .inference_content_based import ContentBasedFilter, str2bool
 import traceback
 from fuzzywuzzy import process
 import json
 from flask import render_template
 import os
+
+try:
+    from .inference_collaborative import CollaborativeFilter
+    from .inference_content_based import ContentBasedFilter, str2bool
+except:
+    from inference_collaborative import CollaborativeFilter
+    from inference_content_based import ContentBasedFilter, str2bool
 
 def get_static_folder():
     dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -17,12 +22,6 @@ app = Flask(__name__, static_url_path='', static_folder=get_static_folder(), tem
 app.config['JSON_SORT_KEYS'] = False
 CORS(app)
 
-dir_path = os.path.dirname(os.path.realpath(__file__))
-print(dir_path)
-print(os.getcwd())
-print(os.path.exists(os.path.join(dir_path, '..', 'client', 'build', 'index.html')))
-print( os.listdir('/app'))
-print( os.listdir('/app/client'))
 
 @app.route('/')
 def react_app():

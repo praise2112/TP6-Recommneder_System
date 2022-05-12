@@ -9,9 +9,19 @@ Dataset from [kaggle](https://www.kaggle.com/datasets/rounakbanik/the-movies-dat
 npm install-all
 ```
 
-## Run App
+## Run Prod App
 ```shell
 npm start
+```
+
+## Run Dev 
+```shell
+npm run dev 
+```
+
+## Build for prod 
+```shell
+npm run build 
 ```
 
 [React App README](client/README.md)

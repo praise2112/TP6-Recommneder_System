@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { useTheme, styled } from '@mui/material/styles';
 import { VariableSizeList } from 'react-window';
@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 
 
 import {
-    Box,
+    Box, CircularProgress,
     FormControl,
     FormControlLabel,
     InputLabel,
@@ -134,10 +134,6 @@ ListboxComponent.propTypes = {
 
 
 const Search = ({modelType, setModelType, recommenderType, setRecommenderType, searchByUser, validUsers, validMovies, setUserOrMovieName, setSearchByUser}) => {
-    // useEffect(() => {
-    //     console.log(`ppp`);
-    //     console.log(validList)
-    // }, [validList]);
 
     return (
         <Box sx={{
@@ -200,44 +196,51 @@ const Search = ({modelType, setModelType, recommenderType, setRecommenderType, s
                         </Select>
                     </FormControl>
                 }
-                {validMovies?.length && !searchByUser  && (
-                    <FormControl sx={{ m: 1, minWidth: 120 }}>
-                        <Autocomplete
-                            id="combo-box-demo"
-                            options={validMovies}
+                {validMovies !== null && !searchByUser  && (
+                    <FormControl sx={{ m: 1, minWidth: validMovies.length === 0 ? 0 : 120 }}>
+                        {validMovies.length === 0 ? (
+                            <CircularProgress size={20} sx={{marginLeft: "2rem"}} />
+                        ): (
+                            <Autocomplete
+                                id="combo-box-demo"
+                                options={validMovies}
 
-                            onChange={(event, newValue) => {
-                                setUserOrMovieName(newValue);
-                            }}
-                            sx={{ width: 300 }}
-                            disableListWrap
-                            PopperComponent={StyledPopper}
-                            ListboxComponent={ListboxComponent}
-                            groupBy={(option) => option[0].toUpperCase()}
-                            renderOption={(props, option) => [props, option]}
-                            renderGroup={(params) => params}
-                            renderInput={(params) => <TextField {...params} label={searchByUser ? 'User Id' : 'Movie Name'} />}
-                        />
+                                onChange={(event, newValue) => {
+                                    setUserOrMovieName(newValue);
+                                }}
+                                sx={{ width: 300 }}
+                                disableListWrap
+                                PopperComponent={StyledPopper}
+                                ListboxComponent={ListboxComponent}
+                                groupBy={(option) => option[0].toUpperCase()}
+                                renderOption={(props, option) => [props, option]}
+                                renderGroup={(params) => params}
+                                renderInput={(params) => <TextField {...params} label={searchByUser ? 'User Id' : 'Movie Name'} />}
+                            />
+                        )}
                     </FormControl>
                 )}
-                {validUsers?.length && searchByUser  && (
+                {validUsers !== null && searchByUser  && (
                     <FormControl sx={{ m: 1, minWidth: 120 }}>
-                        <Autocomplete
-                            id="combo-box-deo"
-                            options={validUsers}
-                            onChange={(event, newValue) => {
-                                console.log(`wooo`, newValue);
-                                setUserOrMovieName(newValue);
-                            }}
-                            sx={{ width: 300 }}
-                            disableListWrap
-                            PopperComponent={StyledPopper}
-                            ListboxComponent={ListboxComponent}
-                            getOptionLabel={(option) => option.toString()}
-                            renderOption={(props, option) => [props, option]}
-                            renderGroup={(params) => params}
-                            renderInput={(params) => <TextField {...params} label={searchByUser ? 'User Id' : 'Movie Name'} />}
-                        />
+                        {validUsers.length === 0 ? (
+                            <CircularProgress />
+                        ): (
+                            <Autocomplete
+                                id="combo-box-deo"
+                                options={validUsers}
+                                onChange={(event, newValue) => {
+                                    setUserOrMovieName(newValue);
+                                }}
+                                sx={{ width: 300 }}
+                                disableListWrap
+                                PopperComponent={StyledPopper}
+                                ListboxComponent={ListboxComponent}
+                                getOptionLabel={(option) => option.toString()}
+                                renderOption={(props, option) => [props, option]}
+                                renderGroup={(params) => params}
+                                renderInput={(params) => <TextField {...params} label={searchByUser ? 'User Id' : 'Movie Name'} />}
+                            />
+                        )}
                     </FormControl>
                 )}
                 {recommenderType === "collaborative" && (

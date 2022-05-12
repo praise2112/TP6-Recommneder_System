@@ -2,7 +2,10 @@ import pandas as pd
 import json
 import statistics
 from fuzzywuzzy import process
-from .base import Base
+try:
+    from .base import Base
+except:
+    from  base import Base
 
 
 def str2bool(v):
@@ -48,9 +51,9 @@ class ContentBasedFilter(Base):
                 'no_of_ratings': int(row.num_of_ratings),
                 'rating': float(statistics.mean(ratings if len(ratings) > 0 else [0])),
                 'genres': [genre['name'] for genre in json.loads(movie.genres.replace("'", '"'))],
-                'more_info': {
-                    **full_movie.drop(['genres', 'id', 'title'])
-                }
+                'more_info': clean({
+                       **full_movie.drop(['genres', 'id', 'title'])
+                   })
             })
         # Sort intp ascending order
         movies_movies = sorted(
