@@ -1,8 +1,8 @@
 import argparse
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from inference_collaborative import CollaborativeFilter
-from inference_content_based import ContentBasedFilter, str2bool
+from .inference_collaborative import CollaborativeFilter
+from .inference_content_based import ContentBasedFilter, str2bool
 import traceback
 from fuzzywuzzy import process
 import json
