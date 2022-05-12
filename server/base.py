@@ -30,7 +30,7 @@ class Base:
     self.valid_movies_itm = self.load("valid_movies_itm.npz")
     self.valid_users_itm = self.load("valid_users_itm.npz")
     self.valid_users_knn = self.load("valid_users_knn.npz")
-    self.valid_movies_knn = self.load("valid_movies_knn.npz")
+    self.valid_movies_knn = self.load("valid_movies_KNN.npz")
 
     ## self.valid_users_cb = self.load("valid_users_cb.npz")
 
