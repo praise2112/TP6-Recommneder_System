@@ -26,12 +26,6 @@ print( os.listdir('/app/client'))
 
 @app.route('/')
 def react_app():
-  dir_path = os.path.dirname(os.path.realpath(__file__))
-  print(dir_path)
-  print(os.getcwd())
-  print(os.path.exists(os.path.join(dir_path, '..', 'client', 'build', 'index.html')))
-  print( os.listdir('/app'))
-  print( os.listdir('/app/client'))
   return render_template('index.html')
 
 
