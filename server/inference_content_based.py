@@ -3,9 +3,9 @@ import json
 import statistics
 from fuzzywuzzy import process
 try:
-    from .base import Base
+    from .base import Base, clean
 except:
-    from  base import Base
+    from  base import Base, clean
 
 
 def str2bool(v):
