@@ -48,7 +48,7 @@ export const useRecommenderSystem = () => {
 
     const getPrediction = async()=>{
         clearTimeout(predictionPromiseRef.current)
-        if (userOrMovieName.toString().length > 0){
+        if (userOrMovieName != null && userOrMovieName.toString().length > 0){
             setIsLoading(true)
             let response
             try {
